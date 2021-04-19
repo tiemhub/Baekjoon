@@ -1,3 +1,6 @@
+#정렬
+#O(n+k) 카운팅 정렬으로 풀어보
+
 def c_sorting(n_list):
     c_list = [0]*(max(n_list)+1)
 
