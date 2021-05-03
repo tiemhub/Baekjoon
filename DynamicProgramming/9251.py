@@ -1,35 +1,21 @@
 #동적 계획법
 #LCS 구하기
 
-def search(i,j,n):
-    max_value = [j,0]
-    for k in cache[i+1:]:
-
-        if j < k[0]:
-            temp = k
-            if temp[1] > max_value[1]:
-                max_value = temp
-
-    return [max_value[0],max_value[1]+1]
-
 import sys
 
 str1 = sys.stdin.readline().strip()
 str2 = sys.stdin.readline().strip()
 
-n = len(str1)
-cache = [[0,0] for _ in range(n)] #[인덱스, 길이] 형식으로 저장
 
-for i in range(len(str1)-1,-1,-1):
+cache = [[0]*len(str2) for _ in str1] #[인덱스, 길이] 형식으로 저장
 
-    for j in range(len(str2)-1,-1,-1):
+for i in range(1,len(str1)):
+
+    for j in range(1,len(str2)):
         if str1[i] == str2[j]:
-            cache[i] = search(i,j,n)
-            
+            cache[i][j] = cache[i-1][j-1] + 1
+        else:
+            cache[i][j] = max(cache[i][j-1],cache[i-1][j])
 
-max_value =  0
-for i in range(n):
-    max_value = max(max_value,cache[i][1])
 
-print(max_value)
-
+print(cache[-1][-1])

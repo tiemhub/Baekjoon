@@ -1,7 +1,7 @@
 #백트래킹
 #스도쿠
 import sys
-global end
+
 end = False
 
 def is_promising(i, j):
