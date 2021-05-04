@@ -6,16 +6,25 @@ n = int(sys.stdin.readline().strip())
 num_list = list(map(int,sys.stdin.readline().split()))
 
 result = num_list[0]
-s1, s2 = num_list[0], num_list[0]
+a,b,c = 0, 0, 0 #총합, 양수
 
-for i in num_list[1:]:
-    s2 += i
-    if i < 0:
-        if s2 < 0:
-            result = max(s1,result)
-            s1, s2 = 0, 0
+for i in num_list:
+    if i >= 0:
+        if b == 0:
+            a += i
+        else:
+            c += i
     else:
-        s1 += i
-    print(s1,s2,result)
+        if c == 0:
+            b += i
+        else:
+            result = max(result,a,c,a+b+c)
+            a = max(c,a+b+c)
+            c = 0
+            b = i
+    print(a,b,c,result)
 
-print(max(result,s1))
+if a==0:
+    print(result)
+else:
+    print(max(result,a,c,a+b+c))
