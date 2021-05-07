@@ -18,7 +18,6 @@ for i in things:
             isin = True
     if not isin:
         cache.append(i)
-    print(cache)
         
 
 print(max(cache,key = lambda x : x[1])[1])
