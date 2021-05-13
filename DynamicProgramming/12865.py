@@ -8,16 +8,13 @@ things = [[0,0] for _ in range(n)]
 for i in range(n):
     things[i] = list(map(int,sys.stdin.readline().split()))
 
-things.sort(reverse = True, key = lambda x : (x[1],x[0]))
-cache = []
-isin = False
-for i in things:
-    for j in cache:
-        if i[0] + j[0] <= k:
-            cache.append([i[0]+j[0],i[1]+j[1]])
-            isin = True
-    if not isin:
-        cache.append(i)
-        
+value = [[0]*(k+1) for _ in range(n)]
 
-print(max(cache,key = lambda x : x[1])[1])
+for i in range(n):
+    for j in range(k+1):
+        if j < things[i][0]:
+            value[i][j] = value[i-1][j]
+        else:
+            value[i][j] = max(things[i][1] + value[i-1][j-things[i][0]],value[i-1][j])
+
+print(value[-1][-1])
