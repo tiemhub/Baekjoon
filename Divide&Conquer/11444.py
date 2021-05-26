@@ -12,9 +12,9 @@ def multiply(arr1,arr2,n):
     return result
 
 def solve(a,b,n):
-    if b == 1:
+    if b == 1 or b == 0:
         return a
-    elif b == 0:
+    elif b == -1:
         return [[0]*2 for i in range(2)]
 
     temp = solve(a,b//2,n)
