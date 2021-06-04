@@ -1,5 +1,6 @@
 #DFS&BFS
-#토마토 3차원
+#숨바꼭질
+#조금 더 안정적인 알고리즘 필요, 순회에 일정 조건이 필요
 import sys
 from collections import deque
 
