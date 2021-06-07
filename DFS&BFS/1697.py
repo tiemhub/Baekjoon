@@ -4,41 +4,32 @@
 import sys
 from collections import deque
 
+visited = [False]*100001
 n,k = map(int,sys.stdin.readline().split())
 
-if n == k:
-    print(0)
-else:
-    times = 0
-    end = False
-    queue= deque()
-    queue.append(n)
+times = -1
+end = False
+queue= deque()
+queue.append(n)
 
-    while queue and not end:
+while queue and not end:
 
-        for _ in range(len(queue)):
-            i = queue.popleft()
+    for _ in range(len(queue)):
+        i = queue.popleft()
 
-            if i*2 == k:
-                end = True
-                break
-            else:
-                queue.append(i*2)
+        if i == k:
+            end = True
+            break
 
-            if i+1 == k:
-                end = True
-                break
-            else:
-                queue.append(i+1)
+        for j in [i+1,i-1,i*2]:
+            if 0 <= j < 100001:
+                if not visited[j]:
+                    visited[j] = True
+                    queue.append(j)
+                    
 
-            if i-1 == k:
-                end = True
-                break
-            else:
-                queue.append(i-1)
+    times += 1
 
-        times += 1
-
-    print(times)
+print(times)
 
         
