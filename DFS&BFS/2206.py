@@ -6,7 +6,7 @@ from collections import deque
 n, m = map(int,sys.stdin.readline().split())
 
 maze = [0]*n
-visited = [[False]*m for _ in range(n)]
+visited = [[[False]*2 for _ in range(m)] for _ in range(n)]
 
 for i in range(n):
     maze[i] = sys.stdin.readline().strip()
@@ -14,9 +14,11 @@ for i in range(n):
 end = False
 times = 0
 queue = deque()
-queue.append([0,0,False]) #i,j,벽을 부쉈는가(boolean)
-visited[0][0] = True
+queue.append([0,0,0]) #i,j,벽을 부쉈는가(boolean)
+visited[0][0] = [True, True]
 
+dx = [1,-1,0,0]
+dy = [0,0,1,-1]
 while queue and not end:
 
     for _ in range(len(queue)):
@@ -26,38 +28,19 @@ while queue and not end:
             end = True
             break
 
-        if i != n-1:
-            if not visited[i+1][j]:
-                if maze[i+1][j] == '1' and not brk:
-                    visited[i+1][j] = True
-                    queue.append([i+1,j,True])
-                elif maze[i+1][j] == '0':
-                    visited[i+1][j] = True
-                    queue.append([i+1,j,brk])
-        if j != m-1:
-            if not visited[i][j+1]:
-                if maze[i][j+1] == '1' and not brk:
-                    visited[i][j+1] = True
-                    queue.append([i,j+1,True])
-                elif maze[i][j+1] == '0':
-                    visited[i][j+1] = True
-                    queue.append([i,j+1,brk])
-        if i != 0:
-            if not visited[i-1][j]:
-                if maze[i-1][j] == '1' and not brk:
-                    visited[i-1][j] = True
-                    queue.append([i-1,j,True])
-                elif maze[i-1][j] == '0':
-                    visited[i-1][j] = True
-                    queue.append([i-1,j,brk])
-        if j != 0:
-            if not visited[i][j-1]:
-                if maze[i][j-1] == '1' and not brk:
-                    visited[i][j-1] = True
-                    queue.append([i,j-1,True])
-                elif maze[i][j-1] == '0':
-                    visited[i][j-1] = True
-                    queue.append([i,j-1,brk])
+        for k in range(4):
+
+            x = i + dx[k]
+            y = j + dy[k]
+
+            if 0 <= x < n and 0 <= y < m:
+                if maze[x][y] == '1' and (not brk) and (not visited[x][y][1]):
+                    visited[x][y][0] = True
+                    queue.append([x,y,1])
+                elif maze[x][y] == '0' and not visited[x][y][brk]:
+                    visited[x][y][brk] = True
+                    queue.append([x,y,brk])
+                    
 
     times += 1
 
