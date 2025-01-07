@@ -12,28 +12,30 @@ N개의 정수로 이루어진 수열이 있을 때, 크기가 양수인 부분�
 """
 
 import sys
-global result
 
-def backtracking(dp, n, s):
+def backtracking(dp, n, s, result):
     # 성공조건 backtracking한 stack의 합이 s 일 때, 다만 이후 합이 0인 수열도 고려해야 하므로 return을 하지는 않음
-    if sum(stack) == s:
-        result += 1
+    if stack: # 빈 스택일 경우 패스
+        if sum(stack) == s:
+            result += 1
 
     if dp == n:
-        return
+        return result
     
     for i in range(dp, n):
-        stack.append(i)
-        backtracking(i+1, n , s)
+        stack.append(nums[i])
+        result = backtracking(i+1, n , s, result)
         stack.pop()
+    
+    return result
 
 
 
 n, s = map(int,sys.stdin.readline().split())
 
 nums = list(map(int, sys.stdin.readline().split()))
-visited = [False] * n
 stack = []
 result = 0
 
-backtracking(0, n, s)
+result = backtracking(0, n, s, result)
+print(result)
